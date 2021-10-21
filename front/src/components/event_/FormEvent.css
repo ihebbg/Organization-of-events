@@ -1,0 +1,16 @@
+.form-event {
+    padding: 3%;
+}
+label {
+    float: left;
+}
+
+h2 {
+    color: black;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+        'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.event-component {
+    background-color: rgb(246, 245, 244);
+    height: 100vh;
+}
