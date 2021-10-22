@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import Header from '../header/Header'
 import './FormEvent.css'
-import { Button } from 'react-bootstrap'
-// import swal from 'sweetalert'
-
+import { BsFillEmojiSmileFill } from 'react-icons/bs'
 const axios = require('axios')
 
 export default function FormEvent(props) {
@@ -22,7 +20,20 @@ export default function FormEvent(props) {
             setPlace(target.value)
         }
     }
-
+    function clearData(e) {
+        e.preventDefault()
+        setData({
+            name_evenement: '',
+            type: '',
+            participants_number: '',
+            date_evenement: '',
+            commentaire: '',
+            place: '',
+            salle: '',
+            city: '',
+            adress: '',
+        })
+    }
     function add_event(e) {
         e.preventDefault()
         var object_event = JSON.stringify({
@@ -55,8 +66,9 @@ export default function FormEvent(props) {
                     setError(response.data.message)
                 } else {
                     setMeassage(response.data.message)
+                    clearData(e)
                 }
-                // console.log(JSON.stringify(response.data))
+                console.log(JSON.stringify(response.data))
             })
             .catch(function (error) {
                 console.log(error)
@@ -76,24 +88,28 @@ export default function FormEvent(props) {
                         textAlign: 'center',
                         fontSize: '18px',
                         backgroundColor: '#47d147',
-                        width: '30%',
-                        textAlign: 'center',
+                        width: '20%',
+                        height: '3.5%',
                         marginTop: '2%',
-                        fontFamily: 'fantasy',
+                        fontFamily: 'cursive',
                         borderRadius: '50px',
                     }}
                     severity='message'
                     onClick={() => setMeassage(null)}
                 >
-                    {props.message || message}
+                    {props.message || message} <BsFillEmojiSmileFill />
                 </div>
             )}
-            <form className='form-event container'>
+            <form
+                className='form-event container'
+                onSubmit={(e) => add_event(e)}
+            >
                 <div className='form-row'>
                     <div className='form-group col-md-6 '>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <label for='name_evenement'>Nom d'évènement:</label>
                         <input
+                            value={data.name_evenement}
                             onChange={(e) => handle(e)}
                             type='text'
                             className='form-control'
@@ -105,6 +121,7 @@ export default function FormEvent(props) {
                         <label for='name_evenement'>Type d'évènement:</label>
 
                         <input
+                            value={data.type}
                             onChange={(e) => handle(e)}
                             type='text'
                             class='form-control'
@@ -119,6 +136,7 @@ export default function FormEvent(props) {
                             Nombre de participations:
                         </label>
                         <input
+                            value={data.participants_number}
                             onChange={(e) => handle(e)}
                             type='number'
                             className='form-control'
@@ -129,6 +147,7 @@ export default function FormEvent(props) {
                     <div class='form-group col-md-6'>
                         <label for='name_evenement'>Date d'évènement:</label>
                         <input
+                            value={data.date_evenement}
                             onChange={(e) => handle(e)}
                             type='date'
                             className='form-control'
@@ -140,6 +159,7 @@ export default function FormEvent(props) {
                     <div className='form-group col-md-6'>
                         <label for='name_evenement'>Commentaire: </label>
                         <textarea
+                            value={data.commentaire}
                             onChange={(e) => handle(e)}
                             className='form-control'
                             id='commentaire'
@@ -194,6 +214,7 @@ export default function FormEvent(props) {
                     <div className='form-group col-md-6'>
                         <label for='name_evenement'>Salle: </label>
                         <input
+                            value={data.salle}
                             onChange={(e) => handle(e)}
                             type='text'
                             className='form-control'
@@ -210,6 +231,7 @@ export default function FormEvent(props) {
                     <div className='form-group col-md-6'>
                         <label for='name_evenement'> La ville: </label>
                         <input
+                            value={data.city}
                             onChange={(e) => handle(e)}
                             type='text'
                             className='form-control'
@@ -220,6 +242,7 @@ export default function FormEvent(props) {
                     <div className='form-group col-md-6'>
                         <label for='name_evenement'> Adresse: </label>
                         <input
+                            value={data.adress}
                             onChange={(e) => handle(e)}
                             type='text'
                             className='form-control'
@@ -242,9 +265,12 @@ export default function FormEvent(props) {
                     </div>
                 )}
                 <br />
-                <Button onClick={(e) => add_event(e)} variant='primary'>
+                <button className='btn btn-primary' type='submit'>
                     Confirmer{' '}
-                </Button>
+                </button>
+                <button className='btn btn-warning' type='reset'>
+                    Annuler{' '}
+                </button>
             </form>
         </div>
     )
