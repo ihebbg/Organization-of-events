@@ -24,7 +24,10 @@ const add_evenement = async (req, res) => {
 
         try {
             const evenement_save_isamm = await evenement.save()
-            res.json({ message: 'Evenement saved', evenement_save_isamm })
+            res.json({
+                message: 'Évènement est ajouté avec success',
+                evenement_save_isamm,
+            })
         } catch (error) {
             res.status(400).json({ message: error })
         }
@@ -71,7 +74,9 @@ const add_evenement = async (req, res) => {
 // get all events
 const all_events = async (req, res) => {
     try {
-        const events = await Evenement.find()
+        const events = await Evenement.find().populate({
+            path: 'User',
+        })
         res.status(200).json(events)
     } catch (error) {
         res.status(400).json({ message: error })
@@ -87,4 +92,16 @@ const event_byid = async (req, res) => {
         res.status(400).json({ message: error })
     }
 }
-module.exports = { add_evenement, all_events, event_byid }
+
+// Delete event
+const delete_event = async (req, res) => {
+    try {
+        const event_delete = await Evenement.remove({
+            _id: req.params.idEvent,
+        })
+        res.status(200).json(delete_event)
+    } catch (error) {
+        res.status(400).json({ message: error })
+    }
+}
+module.exports = { add_evenement, all_events, event_byid, delete_event }
