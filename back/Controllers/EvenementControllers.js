@@ -99,7 +99,10 @@ const delete_event = async (req, res) => {
         const event_delete = await Evenement.remove({
             _id: req.params.idEvent,
         })
-        res.status(200).json(delete_event)
+        res.status(200).json({
+            message: "L'évènement est supprimé avec success",
+            event_delete,
+        })
     } catch (error) {
         res.status(400).json({ message: error })
     }
