@@ -1,6 +1,7 @@
 .table {
     margin-top: 2%;
 }
-h2 {
-    margin-top: 2%;
+.all_events {
+    background-color: rgb(246, 245, 244);
+    height: 100vh;
 }

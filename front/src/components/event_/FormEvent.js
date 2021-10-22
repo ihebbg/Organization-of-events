@@ -2,14 +2,15 @@ import React, { useState } from 'react'
 import Header from '../header/Header'
 import './FormEvent.css'
 import { Button } from 'react-bootstrap'
-import swal from 'sweetalert'
+// import swal from 'sweetalert'
+
 const axios = require('axios')
 
 export default function FormEvent(props) {
     const [place, setPlace] = useState()
     const [data, setData] = useState({})
     const [error, setError] = useState('')
-
+    const [message, setMeassage] = useState('')
     function handle(e) {
         const newdata = { ...data }
         newdata[e.target.id] = e.target.value
@@ -21,20 +22,7 @@ export default function FormEvent(props) {
             setPlace(target.value)
         }
     }
-    function clearData(e) {
-        e.preventDefault()
-        setData({
-            name_evenement: '',
-            type: '',
-            participants_number: '',
-            date_evenement: '',
-            commentaire: '',
-            place: '',
-            salle: '',
-            city: '',
-            adress: '',
-        })
-    }
+
     function add_event(e) {
         e.preventDefault()
         var object_event = JSON.stringify({
@@ -66,8 +54,7 @@ export default function FormEvent(props) {
                 if (response.data.error === 108) {
                     setError(response.data.message)
                 } else {
-                    swal('Évènment est ajouté avec succés')
-                    clearData(e)
+                    setMeassage(response.data.message)
                 }
                 // console.log(JSON.stringify(response.data))
             })
@@ -81,6 +68,26 @@ export default function FormEvent(props) {
             <Header />
             <br />
             <h2> Organiser un évènement</h2>
+            {message && (
+                <div
+                    className='container'
+                    style={{
+                        color: 'white',
+                        textAlign: 'center',
+                        fontSize: '18px',
+                        backgroundColor: '#47d147',
+                        width: '30%',
+                        textAlign: 'center',
+                        marginTop: '2%',
+                        fontFamily: 'fantasy',
+                        borderRadius: '50px',
+                    }}
+                    severity='message'
+                    onClick={() => setMeassage(null)}
+                >
+                    {props.message || message}
+                </div>
+            )}
             <form className='form-event container'>
                 <div className='form-row'>
                     <div className='form-group col-md-6 '>

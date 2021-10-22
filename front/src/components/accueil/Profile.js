@@ -32,7 +32,8 @@ export default function Profile() {
                 backgroundColor: ' rgb(20, 21, 26)',
             }}
         >
-            Bienvenue {profile.full_name} à votre espace d'évènement de ISAMM.
+            Bienvenue {profile.full_name} à votre espace des évènements du
+            ISAMM.
         </h2>
     )
 }
