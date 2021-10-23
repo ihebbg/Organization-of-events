@@ -1,7 +1,6 @@
 const Evenement = require('../Models/Evenement')
 require('../Models/User')
 const { validation_event } = require('../Validations/ValidationEvent')
-// const Participation = require('../Models/Participation')
 
 // add event
 
@@ -31,15 +30,6 @@ const add_evenement = async (req, res) => {
         } catch (error) {
             res.status(400).json({ message: error })
         }
-        // const participation = new Participation({
-        //     user: req.params._idUser,
-        //     evenement: evenement_save._id,
-        // })
-        // try {
-        // } catch (error) {
-        //     const particiaption_save = await participation.save()
-        //     res.json({ message: 'done', particiaption_save })
-        // }
     }
     if (req.body.place === 'autre') {
         const evenement = new Evenement({
@@ -59,15 +49,6 @@ const add_evenement = async (req, res) => {
         } catch (error) {
             res.status(400).json({ message: error })
         }
-        // const participation = new Participation({
-        //     user: req.params._idUser,
-        //     evenement: evenement_save._id,
-        // })
-        // try {
-        // } catch (error) {
-        //     const particiaption_save = await participation.save()
-        //     res.json({ message: 'done', particiaption_save })
-        // }
     }
 }
 
@@ -107,4 +88,20 @@ const delete_event = async (req, res) => {
         res.status(400).json({ message: error })
     }
 }
-module.exports = { add_evenement, all_events, event_byid, delete_event }
+
+//get event by id
+const get_event_byid = async (req, res) => {
+    try {
+        const event = await Evenement.findById({ _id: req.params.idEvent })
+        res.status(200).json({ message: 'Évènement est trouvé', event })
+    } catch (error) {
+        res.status(400).json({ message: error })
+    }
+}
+module.exports = {
+    add_evenement,
+    all_events,
+    event_byid,
+    delete_event,
+    get_event_byid,
+}

@@ -7,6 +7,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 const route_auth = require('./Routes/AuthRoutes')
 const route_even = require('./Routes/EvenementRoutes')
+const route_part = require('./Routes/ParticipationRoute')
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
     res.header(
@@ -17,7 +18,7 @@ app.use(function (req, res, next) {
 })
 app.use('/', route_auth)
 app.use('/', route_even)
-
+app.use('/', route_part)
 app.get('/accueil', (req, res) => {
     const city = 'Manouba'
     request(

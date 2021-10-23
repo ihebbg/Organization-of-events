@@ -1,18 +1,15 @@
-// const mongoose = require('mongoose')
-// const Evenement = require('./Evenement')
-// const User = require('./User')
-// const schema = mongoose.Schema
-// require('../Models/User')
-// require('../Models/Evenement')
-
-// const participation_schema = new schema({
-//     user: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: User,
-//     },
-//     evenement: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: Evenement,
-//     },
-// })
-// module.exports = mongoose.model('participation', participation_schema)
+const mongoose = require('mongoose')
+const schema = mongoose.Schema
+require('./User')
+require('./Evenement')
+const participation_schema = new schema({
+    user: {
+        type: schema.Types.ObjectId,
+        ref: 'users',
+    },
+    evenement: {
+        type: schema.Types.ObjectId,
+        ref: 'evenements',
+    },
+})
+module.exports = mongoose.model('participations', participation_schema)
