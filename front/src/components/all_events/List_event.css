@@ -5,3 +5,6 @@
     background-color: rgb(246, 245, 244);
     height: 100vh;
 }
+span {
+    font-weight: 600;
+}

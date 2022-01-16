@@ -23,7 +23,7 @@ const add_evenement = async (req, res) => {
 
         try {
             const evenement_save_isamm = await evenement.save()
-            res.json({
+            res.json.status(200)({
                 message: 'Évènement est ajouté avec success',
                 evenement_save_isamm,
             })
@@ -45,7 +45,10 @@ const add_evenement = async (req, res) => {
         })
         try {
             const evenement_save_autre = await evenement.save()
-            res.json({ message: 'Evenement saved', evenement_save_autre })
+            res.status(200).json({
+                message: 'Evenement saved',
+                evenement_save_autre,
+            })
         } catch (error) {
             res.status(400).json({ message: error })
         }
@@ -58,7 +61,11 @@ const all_events = async (req, res) => {
         const events = await Evenement.find().populate({
             path: 'User',
         })
-        res.status(200).json(events)
+        res.status(200).json({
+            message: 'tous les évènements sont consultée',
+            events,
+        })
+        console.log(res)
     } catch (error) {
         res.status(400).json({ message: error })
     }
@@ -98,10 +105,44 @@ const get_event_byid = async (req, res) => {
         res.status(400).json({ message: error })
     }
 }
+
+//update event
+const update_event = async (req, res) => {
+    try {
+        const event_update = await Evenement.updateOne(
+            {
+                _id: req.params.idEvent,
+            },
+            {
+                $set: {
+                    name_evenement: req.body.name_evenement,
+                    type: req.body.type,
+                    participants_number: req.body.participants_number,
+                    date_evenement: req.body.date_evenement,
+                    commentaire: req.body.commentaire,
+                    place: req.body.place,
+                    salle: req.body.salle,
+                    city: req.body.city,
+                },
+            },
+        )
+        res.status(200).json({
+            message: 'évènement est modifié avec succés',
+            event_update,
+        })
+    } catch {
+        err
+    }
+    {
+        console.log(err)
+        res.status(500), json({ message: 'server error' })
+    }
+}
 module.exports = {
     add_evenement,
     all_events,
     event_byid,
     delete_event,
     get_event_byid,
+    update_event,
 }

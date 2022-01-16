@@ -52,9 +52,11 @@ const delete_participation = async (req, res) => {
 
 //get Participations  byIdUSER
 
-// const number_participation = async (req, res) => {
+// const participants_byevent = async (req, res) => {
 //     try {
-//         const users_participation = Participation.find
+//         const users_participation = Participation.find({
+
+//         })
 //     } catch (error) {
 //         res.statsu(200).json({ message: error })
 //     }

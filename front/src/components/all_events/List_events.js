@@ -88,7 +88,7 @@ export default function List_events() {
                                     <td> {item.commentaire}</td>
                                     <td> {item.place}</td>
                                     <td> {item.salle}</td>
-                                    <td> {item.ville}</td>
+                                    <td> {item.city}</td>
                                     <td> {item.adress}</td>
                                     <td> {item.User.full_name}</td>
 
