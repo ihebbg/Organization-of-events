@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react'
 import Header from '../header/Header'
 import { BsFillTrashFill } from 'react-icons/bs'
 import { BsFillPencilFill } from 'react-icons/bs'
-import { BsFillExclamationCircleFill } from 'react-icons/bs'
 import './List_event.css'
+import swal from 'sweetalert'
 const axios = require('axios')
 
 export default function List_my_events(props) {
     const [myevents, setMyevents] = useState([])
-    const [message, setMeassage] = useState('')
 
     //fetch data function
     const fetchEvents = async () => {
@@ -21,14 +20,14 @@ export default function List_my_events(props) {
         }
         try {
             const res = await axios(config)
-            console.log(JSON.stringify(res.data))
+            // console.log(JSON.stringify(res.data))
             setMyevents(res.data)
         } catch (error) {
             console.log(error)
         }
     }
-    //delete event function
 
+    //delete event function
     function delete_event(idEvent) {
         var config = {
             method: 'post',
@@ -39,7 +38,11 @@ export default function List_my_events(props) {
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data))
-                setMeassage(response.data.message)
+                swal({
+                    title: ' Vous avez supprimer évènement avec succès',
+                    text: '',
+                    icon: 'success',
+                })
             })
             .catch(function (error) {
                 console.log(error)
@@ -52,28 +55,6 @@ export default function List_my_events(props) {
         <div className='all_events'>
             <Header />
             <div className='table container'>
-                {message && (
-                    <div
-                        className='container'
-                        style={{
-                            color: 'white',
-                            fontSize: '18px',
-
-                            backgroundColor: '#ffc61a',
-                            width: '30%',
-                            height: '3.5%',
-                            textAlign: 'center',
-                            marginTop: '2%',
-                            fontFamily: 'cursive',
-                            borderRadius: '50px',
-                        }}
-                        severity='message'
-                        onClick={() => setMeassage(null)}
-                    >
-                        {props.message || message}{' '}
-                        <BsFillExclamationCircleFill />
-                    </div>
-                )}
                 <table className=' table table-fluid table-responsive-md table-hover table-bordered '>
                     <caption> Liste de tous mes évènements </caption>
                     <thead>

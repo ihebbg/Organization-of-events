@@ -6,6 +6,36 @@ const axios = require('axios')
 
 export default function List_events() {
     const [event, setEvent] = useState([])
+    // const [participation, setParticipation] = useState([])
+
+    const participer = async (idUser, idEvent) => {
+        var object_participer = JSON.stringify({
+            user: localStorage
+                .getItem('id')
+                .substring(1, localStorage.getItem('id').length - 1),
+            evenement: event._id,
+        })
+
+        var config = {
+            method: 'post',
+            url: `http://localhost:7000/participation/${JSON.parse(
+                localStorage.getItem('id'),
+            )}/${idEvent}`,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            data: object_participer,
+        }
+
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data))
+                alert('Vous avez participé à cette évènement')
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }
     const fetchEvents = async () => {
         var config = {
             method: 'get',
@@ -42,7 +72,7 @@ export default function List_events() {
                             <th scope='col'>Salle</th>
                             <th scope='col'>Ville</th>
                             <th scope='col'>Adresse</th>
-                            <th scope='col'>Orgaisateur</th>
+                            <th scope='col'>Organisateur</th>
                             <th scope='col'>Participer</th>
                         </tr>
                     </thead>
@@ -63,7 +93,15 @@ export default function List_events() {
                                     <td> {item.User.full_name}</td>
 
                                     <td>
-                                        <button className='btn btn-primary'>
+                                        <button
+                                            className='btn btn-primary'
+                                            onClick={() =>
+                                                participer(
+                                                    localStorage.getItem('id'),
+                                                    item._id,
+                                                )
+                                            }
+                                        >
                                             <BsFillArrowUpSquareFill />
                                         </button>
                                     </td>

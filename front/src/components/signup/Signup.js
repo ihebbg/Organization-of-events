@@ -67,7 +67,7 @@ const Signup = (props) => {
                 <form className='form-detail'>
                     <h1>S'inscrire</h1>
                     <div className='form-row'>
-                        <label for='full_name'>Nom et Prénom étudiant </label>
+                        <label for='full_name'>Nom et Prénom </label>
                         <input
                             type='text'
                             id='full_name'
@@ -76,7 +76,7 @@ const Signup = (props) => {
                         />
                     </div>
                     <div className='form-row'>
-                        <label for='email'>Email étudiant </label>
+                        <label for='email'>Adresse email </label>
                         <input
                             type='email'
                             id='email'

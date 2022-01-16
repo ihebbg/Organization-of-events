@@ -45,7 +45,7 @@ export default function Header() {
                                 Mes évènements
                             </Link>
                         </li>
-                        <li class='nav-item'>
+                        <li className='nav-item'>
                             <Link
                                 className='nav-link'
                                 to='/mes-participations'

@@ -7,8 +7,9 @@ const new_participation = async (req, res) => {
     })
     try {
         const particiaption_save = await particiaption.save()
+
         res.status(200).json({
-            message: 'La participation est crée',
+            message: 'Vous avez participé à ce évènement',
             particiaption_save,
         })
     } catch (error) {
@@ -16,6 +17,47 @@ const new_participation = async (req, res) => {
     }
 }
 
-//get Participation_byIdUSER
+//get specifc participation by iduser
+const get_participation = async (req, res) => {
+    try {
+        const participations = await Participation.find({
+            user: req.params.idUser,
+        })
+            .populate({
+                path: 'user',
+            })
+            .populate({
+                path: 'evenement',
+            })
+        res.status(200).json(participations)
+    } catch (error) {
+        res.status(200).json({ message: error })
+    }
+}
 
-module.exports = { new_participation }
+// Delete participation( annuler)
+const delete_participation = async (req, res) => {
+    try {
+        const participation = await Participation.remove({
+            _id: req.params.idPart,
+        })
+        res.status(400).json({
+            message: 'Votre participation est annulé',
+            participation,
+        })
+    } catch (error) {
+        res.statsu(200).json({ message: error })
+    }
+}
+
+//get Participations  byIdUSER
+
+// const number_participation = async (req, res) => {
+//     try {
+//         const users_participation = Participation.find
+//     } catch (error) {
+//         res.statsu(200).json({ message: error })
+//     }
+// }
+
+module.exports = { new_participation, delete_participation, get_participation }

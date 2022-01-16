@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import Header from '../header/Header'
 import './FormEvent.css'
-import { BsFillEmojiSmileFill } from 'react-icons/bs'
+import swal from 'sweetalert'
 const axios = require('axios')
 
 export default function FormEvent(props) {
     const [place, setPlace] = useState()
     const [data, setData] = useState({})
     const [error, setError] = useState('')
-    const [message, setMeassage] = useState('')
     function handle(e) {
         const newdata = { ...data }
         newdata[e.target.id] = e.target.value
@@ -65,7 +64,11 @@ export default function FormEvent(props) {
                 if (response.data.error === 108) {
                     setError(response.data.message)
                 } else {
-                    setMeassage(response.data.message)
+                    swal({
+                        title: ' Vous avez ajouter votre évènement avec succès',
+                        text: '',
+                        icon: 'success',
+                    })
                     clearData(e)
                 }
                 console.log(JSON.stringify(response.data))
@@ -80,26 +83,7 @@ export default function FormEvent(props) {
             <Header />
             <br />
             <h2> Organiser un évènement</h2>
-            {message && (
-                <div
-                    className='container'
-                    style={{
-                        color: 'white',
-                        textAlign: 'center',
-                        fontSize: '18px',
-                        backgroundColor: '#47d147',
-                        width: '20%',
-                        height: '3.5%',
-                        marginTop: '2%',
-                        fontFamily: 'cursive',
-                        borderRadius: '50px',
-                    }}
-                    severity='message'
-                    onClick={() => setMeassage(null)}
-                >
-                    {props.message || message} <BsFillEmojiSmileFill />
-                </div>
-            )}
+
             <form
                 className='form-event container'
                 onSubmit={(e) => add_event(e)}
@@ -124,7 +108,7 @@ export default function FormEvent(props) {
                             value={data.type}
                             onChange={(e) => handle(e)}
                             type='text'
-                            class='form-control'
+                            className='form-control'
                             id='type'
                             placeholder="Ecrire le type d'évènement "
                         />
@@ -144,7 +128,7 @@ export default function FormEvent(props) {
                             placeholder=' Ecrire le nombre de participations'
                         />
                     </div>
-                    <div class='form-group col-md-6'>
+                    <div className='form-group col-md-6'>
                         <label for='name_evenement'>Date d'évènement:</label>
                         <input
                             value={data.date_evenement}
